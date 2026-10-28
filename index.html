@@ -1,67 +1,86 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My First Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap" rel="stylesheet">
-    <style>
-      body {
-        font-family: "Nunito", "Trebuchet MS", sans-serif;
-        text-align: center;
-        padding-top: 80px;
-      }
-      h1 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 4rem;
-        font-weight: 800;
-        margin: 0;
-      }
-      .letter, .smiley {
-        display: inline-block;
-        opacity: 0;
-        animation-fill-mode: forwards;
-      }
-      .letter {
-        transform: translateY(30px);
-        animation-name: reveal;
-        animation-duration: 0.6s;
-        animation-timing-function: ease;
-      }
-      .space {
-        display: inline-block;
-        width: 0.35em;
-      }
-      .smiley {
-        margin-left: 0.2em;
-        animation-name: pop;
-        animation-duration: 0.8s;
-        animation-delay: 2.4s;
-      }
-      @keyframes reveal {
-        to { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes pop {
-        0%   { opacity: 0; transform: scale(0) rotate(-30deg); }
-        70%  { opacity: 1; transform: scale(1.4) rotate(10deg); }
-        100% { opacity: 1; transform: scale(1) rotate(0); }
-      }
-    </style>
-  </head>
-  <body>
-    <h1>
-      <span class="letter" style="color:#ff3b30; animation-delay:0.2s">H</span>
-      <span class="letter" style="color:#ff9500; animation-delay:0.4s">e</span>
-      <span class="letter" style="color:#ffcc00; animation-delay:0.6s">l</span>
-      <span class="letter" style="color:#34c759; animation-delay:0.8s">l</span>
-      <span class="letter" style="color:#00c7be; animation-delay:1.0s">o</span>
-      <span class="space"></span>
-      <span class="letter" style="color:#007aff; animation-delay:1.2s">W</span>
-      <span class="letter" style="color:#5856d6; animation-delay:1.4s">o</span>
-      <span class="letter" style="color:#af52de; animation-delay:1.6s">r</span>
-      <span class="letter" style="color:#ff2d92; animation-delay:1.8s">l</span>
-      <span class="letter" style="color:#ff3b30; animation-delay:2.0s">d</span>
-      <span class="smiley">😊</span>
-    </h1>
-  </body>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kata Companion</title>
+<style>
+  :root { --bg:#111; --card:#1c1c1c; --text:#f2f2f2; --muted:#999; --red:#c8102e; --line:#333; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,system-ui,sans-serif; background:var(--bg); color:var(--text); }
+  main { max-width:480px; margin:0 auto; padding:24px 16px 48px; }
+  h1 { font-size:28px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 24px; }
+  .card { background:var(--card); border-radius:14px; padding:16px; margin-bottom:12px; }
+  .stats { display:flex; gap:12px; margin-bottom:24px; }
+  .stats .card { flex:1; margin:0; text-align:center; }
+  .num { font-size:28px; font-weight:700; }
+  .label { color:var(--muted); font-size:13px; }
+  input[type=date] { margin-top:8px; width:100%; padding:8px; border-radius:8px; border:1px solid var(--line); background:#000; color:var(--text); }
+  h2 { font-size:18px; margin:24px 0 12px; }
+  .kata { display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--text); }
+  .step { width:36px; height:36px; border-radius:50%; background:var(--red); display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }
+  .locked { opacity:.45; }
+  .locked .step { background:var(--line); }
+  .kata-name { font-weight:600; }
+  .arrow { margin-left:auto; color:var(--muted); }
+  .note { color:var(--muted); font-size:13px; text-align:center; margin-top:32px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Kata Companion</h1>
+  <p class="sub">Learn the sequence at home. Bring your focus to form in the dojo.</p>
+
+  <div class="stats">
+    <div class="card"><div class="num" id="streak">0</div><div class="label">day streak</div></div>
+    <div class="card"><div class="num" id="days">–</div><div class="label">days to grading</div></div>
+  </div>
+
+  <div class="card">
+    <div class="label">Your next grading date</div>
+    <input type="date" id="gradingDate">
+  </div>
+
+  <h2>Your kata path</h2>
+
+  <a class="card kata" href="heian-shodan.html">
+    <div class="step">1</div>
+    <div><div class="kata-name">Heian Shodan</div><div class="label">21 moves · 2 kiai</div></div>
+    <div class="arrow">›</div>
+  </a>
+
+  <div class="card kata locked">
+    <div class="step">2</div>
+    <div><div class="kata-name">Heian Nidan</div><div class="label">Coming soon</div></div>
+    <div class="arrow">🔒</div>
+  </div>
+
+  <div class="card kata locked">
+    <div class="step">3</div>
+    <div><div class="kata-name">Heian Sandan</div><div class="label">Coming soon</div></div>
+    <div class="arrow">🔒</div>
+  </div>
+
+  <p class="note">A companion to your training, not a replacement for your sensei.</p>
+</main>
+
+<script>
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function save(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+
+  var dateInput = document.getElementById('gradingDate');
+  function showCountdown() {
+    var d = dateInput.value;
+    if (!d) { document.getElementById('days').textContent = '–'; return; }
+    var diff = Math.ceil((new Date(d) - new Date().setHours(0,0,0,0)) / 86400000);
+    document.getElementById('days').textContent = diff >= 0 ? diff : '–';
+  }
+  dateInput.value = load('gradingDate') || '';
+  dateInput.addEventListener('change', function () { save('gradingDate', dateInput.value); showCountdown(); });
+  showCountdown();
+
+  document.getElementById('streak').textContent = load('streak') || 0;
+</script>
+</body>
 </html>
