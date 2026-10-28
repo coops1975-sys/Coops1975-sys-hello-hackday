@@ -7,42 +7,61 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Yuji+Boku&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#f4f0e6; --card:#fffdf8; --ink:#1a1a1a; --muted:#5c5850; --red:#c8102e; --line:#e4ddcc; }
+  :root { --bg:#f4f0e6; --card:#fffdf8; --ink:#1a1a1a; --muted:#5c5850; --red:#c8102e; --line:#e4ddcc; --green:#2f6b3a; }
   * { box-sizing:border-box; }
   body { margin:0; font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--ink); }
   main { max-width:480px; margin:0 auto; padding:16px 20px 48px; }
-  .back { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:10px 18px; border-radius:22px; border:1px solid var(--ink); background:var(--card); color:var(--ink); text-decoration:none; font-size:15px; font-weight:500; }
-  .head { text-align:center; padding:8px 0 4px; }
+  .back { display:inline-flex; align-items:center; min-height:44px; padding:10px 18px; border-radius:22px; border:1px solid var(--ink); background:var(--card); color:var(--ink); text-decoration:none; font-size:15px; font-weight:500; }
+  .head { text-align:center; padding:12px 0 4px; }
   .kanji { font-family:'Yuji Boku',serif; font-size:52px; line-height:1; }
   h1 { font-family:'Shippori Mincho',serif; font-size:32px; margin:8px 0 0; }
   .sub { color:var(--muted); font-size:15px; margin:6px 0 0; }
-  h2 { font-family:'Shippori Mincho',serif; font-size:22px; margin:28px 0 12px; }
+  h2 { font-family:'Shippori Mincho',serif; font-size:22px; margin:28px 0 6px; }
+  .intro { color:var(--muted); font-size:14px; margin:0 0 12px; line-height:1.45; }
   .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; margin-bottom:14px; }
   .label { color:var(--muted); font-size:13px; }
-  .video { position:relative; padding-top:56.25%; border-radius:14px; overflow:hidden; background:var(--ink); }
+  .tag { display:inline-block; padding:2px 10px; border-radius:12px; background:var(--bg); font-size:12px; font-weight:700; color:var(--muted); }
+  .video { position:relative; padding-top:56.25%; border-radius:14px; overflow:hidden; background:var(--ink); margin-top:10px; }
   .video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
-  .btn { display:flex; align-items:center; justify-content:center; min-height:48px; padding:12px 18px; border-radius:24px; border:1px solid var(--ink); background:var(--card); color:var(--ink); font-family:inherit; font-size:16px; font-weight:500; text-decoration:none; cursor:pointer; width:100%; }
+  .btn { display:flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:12px 18px; border-radius:24px; border:1px solid var(--ink); background:var(--card); color:var(--ink); font-family:inherit; font-size:16px; font-weight:500; text-decoration:none; cursor:pointer; width:100%; }
   .btn.dark { background:var(--ink); color:var(--bg); }
   .btn.red { background:var(--red); border-color:var(--red); color:#fff; }
   .btn:disabled { opacity:.35; cursor:default; }
-  .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; }
+  .pills { display:flex; flex-wrap:wrap; gap:8px; }
+  .pill { min-height:40px; padding:8px 14px; border-radius:20px; border:1px solid #d8d0bc; background:var(--card); color:var(--ink); font-family:inherit; font-size:14px; cursor:pointer; }
+  .pill.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .toggle { display:grid; grid-template-columns:1fr 1fr; background:var(--bg); border-radius:22px; padding:4px; margin-bottom:16px; }
+  .toggle button { min-height:40px; border:0; border-radius:18px; background:none; font-family:inherit; font-size:14px; font-weight:500; color:var(--muted); cursor:pointer; }
+  .toggle button.on { background:var(--card); color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.1); }
   .count { display:flex; justify-content:space-between; align-items:baseline; }
-  .count .jp { font-family:'Shippori Mincho',serif; font-size:20px; font-weight:700; color:var(--red); }
-  .tech { font-family:'Shippori Mincho',serif; font-size:26px; font-weight:700; margin:10px 0 2px; }
-  .stance { color:var(--muted); font-size:15px; }
-  .detail { margin-top:14px; padding-top:14px; border-top:1px solid var(--line); font-size:15px; line-height:1.5; }
-  .detail strong { display:block; font-size:13px; color:var(--muted); font-weight:500; margin-bottom:2px; }
-  .detail p { margin:0 0 10px; }
-  .opp { background:var(--bg); border-radius:12px; padding:12px 14px; }
-  .kiai { display:inline-block; margin-left:8px; padding:2px 10px; border-radius:12px; background:var(--red); color:#fff; font-size:12px; font-weight:700; vertical-align:middle; }
+  .count .jp { font-family:'Shippori Mincho',serif; font-size:22px; font-weight:700; color:var(--red); }
+  .big { font-family:'Shippori Mincho',serif; font-size:26px; font-weight:700; margin:10px 0 4px; line-height:1.25; }
+  .small { color:var(--muted); font-size:15px; line-height:1.45; }
+  .kiai { display:inline-block; margin-left:8px; padding:2px 10px; border-radius:12px; background:var(--red); color:#fff; font-size:12px; font-weight:700; vertical-align:middle; font-family:'DM Sans',sans-serif; }
   .bar { height:4px; background:var(--line); border-radius:2px; margin-top:14px; overflow:hidden; }
   .bar div { height:100%; background:var(--red); transition:width .3s; }
-  .embusen svg { width:100%; height:auto; display:block; }
+  .embusen { margin-top:14px; background:var(--bg); border-radius:14px; padding:8px; }
+  .embusen svg { width:100%; max-width:300px; height:auto; display:block; margin:0 auto; }
+  .detail { margin-top:14px; font-size:15px; line-height:1.5; }
+  .detail strong { display:block; font-size:13px; color:var(--muted); font-weight:500; margin-bottom:2px; }
+  .box { background:var(--bg); border-radius:12px; padding:12px 14px; margin-bottom:10px; }
+  .play { margin-top:16px; padding-top:16px; border-top:1px solid var(--line); }
+  .play-row { display:flex; gap:8px; align-items:center; margin-top:10px; }
+  .play-row .pill { flex:1; }
   .move { display:flex; align-items:center; gap:12px; width:100%; min-height:48px; padding:10px 0; border:0; border-bottom:1px solid #ece6d6; background:none; font-family:inherit; font-size:15px; text-align:left; color:var(--ink); cursor:pointer; }
   .move:last-child { border-bottom:0; }
   .move .n { width:30px; height:30px; border-radius:50%; background:var(--bg); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
   .move.on .n { background:var(--red); color:#fff; }
+  .move.out { opacity:.4; }
   .move .s { color:var(--muted); font-size:13px; }
+  .q { font-family:'Shippori Mincho',serif; font-size:20px; font-weight:700; margin:8px 0 14px; line-height:1.35; }
+  .answers { display:grid; gap:10px; }
+  .answers .btn { justify-content:flex-start; }
+  .answers .btn.right { background:var(--green); border-color:var(--green); color:#fff; }
+  .answers .btn.wrong { background:#fbe9ec; border-color:var(--red); color:#a30d25; }
+  .feedback { min-height:22px; margin-top:12px; font-size:15px; }
+  .score { display:flex; justify-content:space-between; align-items:center; margin-top:12px; }
   .done-msg { text-align:center; color:var(--muted); font-size:14px; margin-top:10px; min-height:20px; }
   .note { color:#6b665c; font-size:13px; text-align:center; margin-top:28px; }
 </style>
@@ -59,6 +78,7 @@
 
   <h2>Watch it</h2>
   <div class="card">
+    <span class="tag">Demo video · to be verified</span>
     <div class="video">
       <iframe src="https://www.youtube-nocookie.com/embed/O0ndtpxDU8s" title="Heian Shodan video" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
@@ -66,128 +86,308 @@
   </div>
 
   <h2>Follow along</h2>
-  <div class="card">
-    <div class="count"><span class="label" id="moveNum"></span><span class="jp" id="jpCount"></span></div>
-    <div class="tech" id="tech"></div>
-    <div class="stance" id="stance"></div>
-    <div class="bar"><div id="bar"></div></div>
-    <div class="detail">
-      <p><strong>Feet and hips</strong><span id="feet"></span></p>
-      <div class="opp"><strong>Your opponent</strong><span id="opp"></span></div>
+  <p class="intro">Practise the whole kata or one section at a time.</p>
+  <div class="pills" id="chunks" style="margin-bottom:12px"></div>
+
+  <div class="card" id="follow">
+    <div class="toggle">
+      <button id="modeSteps" class="on">The steps</button>
+      <button id="modeOpp">The opponent</button>
     </div>
+    <div class="count"><span class="label" id="moveNum"></span><span class="jp" id="jpCount"></span></div>
+    <div class="big" id="big"></div>
+    <div class="small" id="small"></div>
+    <div class="bar"><div id="bar"></div></div>
+
+    <div class="embusen">
+      <svg viewBox="0 0 300 300" role="img" aria-label="Floor pattern showing where this move happens and which way you face">
+        <g stroke="#d8d0bc" stroke-width="4" stroke-linecap="round" fill="none">
+          <path d="M50 50 L250 50"/><path d="M150 50 L150 230"/><path d="M50 230 L250 230"/>
+          <path d="M150 230 L90 280"/><path d="M150 230 L210 280"/>
+        </g>
+        <g id="trail"></g>
+        <circle cx="150" cy="230" r="5" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="150" y="216" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="11" fill="#5c5850">Start</text>
+        <g id="facing"><path d="M0 -26 L8 -14 L-8 -14 Z" fill="#c8102e"/></g>
+        <circle id="dot" cx="150" cy="230" r="11" fill="#c8102e"/>
+        <text id="dotNum" x="150" y="234" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="11" font-weight="700" fill="#fff"></text>
+      </svg>
+      <p class="label" style="text-align:center;margin:4px 0 2px">The arrow shows which way you face</p>
+    </div>
+
+    <div class="detail">
+      <div class="box"><strong>Feet and hips</strong><span id="feet"></span></div>
+    </div>
+
     <div class="row">
       <button class="btn" id="prev">‹ Back</button>
       <button class="btn dark" id="nextBtn">Next move ›</button>
     </div>
-  </div>
 
-  <h2>Floor pattern</h2>
-  <div class="card embusen">
-    <svg viewBox="0 0 300 300" role="img" aria-label="Heian Shodan floor pattern, an I shape with diagonals at the bottom">
-      <g stroke="#1a1a1a" stroke-width="4" stroke-linecap="round" fill="none">
-        <path d="M50 50 L250 50"/>
-        <path d="M150 50 L150 230"/>
-        <path d="M50 230 L250 230"/>
-        <path d="M150 230 L90 280" stroke-dasharray="6 6"/>
-        <path d="M150 230 L210 280" stroke-dasharray="6 6"/>
-      </g>
-      <circle cx="150" cy="230" r="9" fill="#c8102e"/>
-      <g font-family="DM Sans, sans-serif" font-size="13" fill="#5c5850">
-        <text x="150" y="214" text-anchor="middle">Start</text>
-        <text x="30" y="226">1–2</text>
-        <text x="252" y="226">3–5</text>
-        <text x="158" y="140">6–9 ↑</text>
-        <text x="20" y="46">10–11</text>
-        <text x="236" y="46">12–13</text>
-        <text x="96" y="140">↓ 14–17</text>
-        <text x="40" y="290">18–19</text>
-        <text x="216" y="290">20–21</text>
-      </g>
-    </svg>
-    <p class="label" style="margin:10px 0 0">You start and finish on the same spot. If you end up somewhere else, check your turns.</p>
+    <div class="play">
+      <strong style="font-size:15px">Hands-free</strong>
+      <div class="label" style="margin-top:2px">Prop your phone up. It counts each move aloud in Japanese and moves on by itself.</div>
+      <div class="play-row">
+        <button class="pill" data-speed="4000">Slow</button>
+        <button class="pill on" data-speed="2800">Steady</button>
+        <button class="pill" data-speed="1800">Brisk</button>
+      </div>
+      <button class="btn red" id="playBtn" style="margin-top:10px">▶ Start hands-free</button>
+    </div>
   </div>
 
   <h2>All 21 moves</h2>
+  <p class="intro">Tap any move to jump to it in Follow along.</p>
   <div class="card" id="list" style="padding:6px 20px"></div>
 
-  <button class="btn red" id="practised">✓ I practised today</button>
-  <div class="done-msg" id="doneMsg"></div>
+  <h2>Test yourself</h2>
+  <p class="intro">For the bus or a quiet moment. Remembering is what makes the sequence stick.</p>
+  <div class="card">
+    <span class="tag" id="qTag">Question 1</span>
+    <div class="q" id="question"></div>
+    <div class="answers" id="answers"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="score"><span class="label" id="score">0 correct</span><button class="pill" id="nextQ">Next question ›</button></div>
+  </div>
 
-  <a class="btn" href="index.html" style="margin-top:16px">‹ Back to Dojo Home</a>
+  <h2>Log your practice</h2>
+  <div class="card">
+    <p class="small" id="unlockMsg" style="margin:0 0 12px">Finish a full run-through (all 21 moves) or get 5 quiz answers right to log today.</p>
+    <button class="btn red" id="practised" disabled>✓ I practised today</button>
+    <div class="done-msg" id="doneMsg"></div>
+  </div>
 
-  <p class="note">Based on the standard JKA version. Check the details with your sensei.</p>
+  <a class="btn" href="index.html" style="margin-top:8px">‹ Back to Dojo Home</a>
+
+  <p class="note">Based on the standard JKA version. Moves, turns and floor positions need checking with your sensei.</p>
 </main>
 
 <script>
+  // [Japanese count, spoken count, technique, stance, feet and hips, your opponent, floor x, floor y, facing (0 = forward)]
   var moves = [
-    ["Ichi","Gedan-barai","Left front stance","Turn 90° to your left. Step out with your left foot.","An attacker on your left kicks low. Sweep it away."],
-    ["Ni","Oi-zuki chūdan","Right front stance","Step forward with your right foot, hips square.","Step in and punch them in the body."],
-    ["San","Gedan-barai","Right front stance","Turn 180° clockwise, pivoting on your left foot.","A second attacker behind you kicks low."],
-    ["Shi","Tettsui-uchi","Right front stance","Draw your right foot in a little, then step it back out as you strike.","They grab your arm. Free it and hammer-fist their head."],
-    ["Go","Oi-zuki chūdan","Left front stance","Step forward with your left foot.","Follow up with a body punch."],
-    ["Roku","Gedan-barai","Left front stance","Turn 90° left to face forward, stepping with your left foot.","A new attacker in front kicks low."],
-    ["Shichi","Age-uke","Right front stance","Step forward. Open the left hand, then rise into the block.","They punch to your head. Lift it away."],
-    ["Hachi","Age-uke","Left front stance","Step forward.","They attack your head again."],
-    ["Ku","Age-uke","Right front stance","Step forward. Kiai!","Final head attack. Block with total commitment."],
-    ["Jū","Gedan-barai","Left front stance","Turn 270° anticlockwise on your right foot.","An attacker on the far left kicks low."],
-    ["Jū-ichi","Oi-zuki chūdan","Right front stance","Step forward with your right foot.","Step in and punch them."],
-    ["Jū-ni","Gedan-barai","Right front stance","Turn 180° clockwise.","An attacker behind you kicks low."],
-    ["Jū-san","Oi-zuki chūdan","Left front stance","Step forward with your left foot.","Step in and punch them."],
-    ["Jū-shi","Gedan-barai","Left front stance","Turn 90° left to face back towards the start.","An attacker ahead of you kicks low."],
-    ["Jū-go","Oi-zuki chūdan","Right front stance","Step forward.","They retreat. Drive forward with a punch."],
-    ["Jū-roku","Oi-zuki chūdan","Left front stance","Step forward.","Keep pressing them back."],
-    ["Jū-shichi","Oi-zuki chūdan","Right front stance","Step forward. Kiai!","Finish them with your strongest punch."],
-    ["Jū-hachi","Shutō-uke","Right back stance","Turn 270° anticlockwise to the left diagonal.","An attacker on the front-left diagonal punches."],
-    ["Jū-ku","Shutō-uke","Left back stance","Step 45° to the right diagonal.","Another comes from the front-right."],
-    ["Ni-jū","Shutō-uke","Left back stance","Turn 135° clockwise to the back-right diagonal.","An attacker from behind on the right."],
-    ["Ni-jū-ichi","Shutō-uke","Right back stance","Step 45° to the back-left diagonal. Then yame: return to the start.","The last attacker, from behind on the left."]
+    ["Ichi","いち","Gedan-barai","Left front stance","Turn 90° to your left. Step out with your left foot.","An attacker on your left kicks low. Sweep it away.",110,230,270],
+    ["Ni","に","Oi-zuki chūdan","Right front stance","Step forward with your right foot, hips square.","Step in and punch them in the body.",70,230,270],
+    ["San","さん","Gedan-barai","Right front stance","Turn 180° clockwise, pivoting on your left foot.","A second attacker behind you kicks low.",190,230,90],
+    ["Shi","し","Tettsui-uchi","Right front stance","Draw your right foot in a little, then step it back out as you strike.","They grab your arm. Free it and hammer-fist their head.",190,230,90],
+    ["Go","ご","Oi-zuki chūdan","Left front stance","Step forward with your left foot.","Follow up with a body punch.",230,230,90],
+    ["Roku","ろく","Gedan-barai","Left front stance","Turn 90° left to face forward, stepping with your left foot.","A new attacker in front kicks low.",150,200,0],
+    ["Shichi","しち","Age-uke","Right front stance","Step forward. Open the left hand, then rise into the block.","They punch to your head. Lift it away.",150,160,0],
+    ["Hachi","はち","Age-uke","Left front stance","Step forward.","They attack your head again.",150,120,0],
+    ["Ku","く","Age-uke","Right front stance","Step forward. Kiai!","Final head attack. Block with total commitment.",150,80,0],
+    ["Jū","じゅう","Gedan-barai","Left front stance","Turn 270° anticlockwise on your right foot.","An attacker on the far left kicks low.",110,50,270],
+    ["Jū-ichi","じゅういち","Oi-zuki chūdan","Right front stance","Step forward with your right foot.","Step in and punch them.",70,50,270],
+    ["Jū-ni","じゅうに","Gedan-barai","Right front stance","Turn 180° clockwise.","An attacker behind you kicks low.",190,50,90],
+    ["Jū-san","じゅうさん","Oi-zuki chūdan","Left front stance","Step forward with your left foot.","Step in and punch them.",230,50,90],
+    ["Jū-shi","じゅうし","Gedan-barai","Left front stance","Turn 90° left to face back towards the start.","An attacker ahead of you kicks low.",150,80,180],
+    ["Jū-go","じゅうご","Oi-zuki chūdan","Right front stance","Step forward.","They retreat. Drive forward with a punch.",150,120,180],
+    ["Jū-roku","じゅうろく","Oi-zuki chūdan","Left front stance","Step forward.","Keep pressing them back.",150,160,180],
+    ["Jū-shichi","じゅうしち","Oi-zuki chūdan","Right front stance","Step forward. Kiai!","Finish them with your strongest punch.",150,200,180],
+    ["Jū-hachi","じゅうはち","Shutō-uke","Right back stance","Turn 270° anticlockwise onto the diagonal.","An attacker comes in on the diagonal and punches.",125,250,225],
+    ["Jū-ku","じゅうく","Shutō-uke","Left back stance","Step 45° onto the diagonal.","A second attacker on the same side.",100,270,225],
+    ["Ni-jū","にじゅう","Shutō-uke","Left back stance","Turn 135° clockwise onto the other diagonal.","An attacker from the other side.",175,250,135],
+    ["Ni-jū-ichi","にじゅういち","Shutō-uke","Right back stance","Step 45° onto the diagonal. Then yame: return to the start.","The last attacker. Then back to ready, still alert.",200,270,135]
   ];
   var kiai = [8, 16];
+  var chunks = [
+    { name: "Whole kata", from: 0, to: 20 },
+    { name: "1–5 Opening", from: 0, to: 4 },
+    { name: "6–9 Rising blocks", from: 5, to: 8 },
+    { name: "10–13 Far line", from: 9, to: 12 },
+    { name: "14–17 Punches home", from: 13, to: 16 },
+    { name: "18–21 Knife hands", from: 17, to: 20 }
+  ];
+  var chunk = chunks[0];
   var i = 0;
+  var mode = 'steps';
+  var seen = {};
+  var unlocked = false;
 
-  var list = document.getElementById('list');
+  function $(id) { return document.getElementById(id); }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function markChunk(c) { Array.prototype.forEach.call($('chunks').children, function (p, k) { p.className = 'pill' + (chunks[k] === c ? ' on' : ''); }); }
+
+  // ---------- Sections ----------
+  chunks.forEach(function (c) {
+    var b = document.createElement('button');
+    b.className = 'pill';
+    b.textContent = c.name;
+    b.onclick = function () { stopPlay(); chunk = c; i = c.from; markChunk(c); show(); };
+    $('chunks').appendChild(b);
+  });
+  markChunk(chunk);
+
+  // ---------- Steps / opponent toggle ----------
+  $('modeSteps').onclick = function () { mode = 'steps'; $('modeSteps').className = 'on'; $('modeOpp').className = ''; show(); };
+  $('modeOpp').onclick = function () { mode = 'opp'; $('modeOpp').className = 'on'; $('modeSteps').className = ''; show(); };
+
+  // ---------- Move list ----------
   moves.forEach(function (m, n) {
     var b = document.createElement('button');
     b.className = 'move';
-    b.innerHTML = '<span class="n">' + (n + 1) + '</span><span><div>' + m[1] + (kiai.indexOf(n) > -1 ? ' <span class="kiai">Kiai</span>' : '') + '</div><div class="s">' + m[2] + '</div></span>';
-    b.onclick = function () { i = n; show(); window.scrollTo({ top: document.getElementById('tech').offsetTop - 120, behavior: 'smooth' }); };
-    list.appendChild(b);
+    b.innerHTML = '<span class="n">' + (n + 1) + '</span><span><div>' + m[2] + (kiai.indexOf(n) > -1 ? ' <span class="kiai">Kiai</span>' : '') + '</div><div class="s">' + m[3] + '</div></span>';
+    b.onclick = function () {
+      stopPlay();
+      if (n < chunk.from || n > chunk.to) { chunk = chunks[0]; markChunk(chunk); }
+      i = n; show();
+      $('follow').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    $('list').appendChild(b);
   });
 
+  // ---------- Show the current move ----------
   function show() {
     var m = moves[i];
-    document.getElementById('moveNum').textContent = 'Move ' + (i + 1) + ' of ' + moves.length;
-    document.getElementById('jpCount').textContent = m[0];
-    document.getElementById('tech').innerHTML = m[1] + (kiai.indexOf(i) > -1 ? '<span class="kiai">Kiai</span>' : '');
-    document.getElementById('stance').textContent = m[2];
-    document.getElementById('feet').textContent = m[3];
-    document.getElementById('opp').textContent = m[4];
-    document.getElementById('bar').style.width = ((i + 1) / moves.length * 100) + '%';
-    document.getElementById('prev').disabled = i === 0;
-    document.getElementById('nextBtn').textContent = i === moves.length - 1 ? 'Start again ↺' : 'Next move ›';
-    Array.prototype.forEach.call(list.children, function (el, n) { el.className = 'move' + (n === i ? ' on' : ''); });
+    var k = kiai.indexOf(i) > -1 ? '<span class="kiai">Kiai</span>' : '';
+    $('moveNum').textContent = 'Move ' + (i + 1) + ' of 21';
+    $('jpCount').textContent = m[0];
+    if (mode === 'steps') { $('big').innerHTML = m[2] + k; $('small').textContent = m[3]; }
+    else { $('big').innerHTML = m[5] + k; $('small').textContent = m[2] + ' · ' + m[3]; }
+    $('feet').textContent = m[4];
+    $('bar').style.width = ((i - chunk.from + 1) / (chunk.to - chunk.from + 1) * 100) + '%';
+    $('prev').disabled = i === chunk.from;
+    $('nextBtn').textContent = i === chunk.to ? 'Start again ↺' : 'Next move ›';
+
+    $('dot').setAttribute('cx', m[6]); $('dot').setAttribute('cy', m[7]);
+    $('dotNum').setAttribute('x', m[6]); $('dotNum').setAttribute('y', m[7] + 4); $('dotNum').textContent = i + 1;
+    $('facing').setAttribute('transform', 'translate(' + m[6] + ' ' + m[7] + ') rotate(' + m[8] + ')');
+    var trail = '';
+    for (var t = chunk.from; t < i; t++) { trail += '<circle cx="' + moves[t][6] + '" cy="' + moves[t][7] + '" r="5" fill="#b5ab95"/>'; }
+    $('trail').innerHTML = trail;
+
+    Array.prototype.forEach.call($('list').children, function (el, n) {
+      el.className = 'move' + (n === i ? ' on' : '') + (n < chunk.from || n > chunk.to ? ' out' : '');
+    });
+
+    if (chunk === chunks[0]) {
+      seen[i] = true;
+      if (Object.keys(seen).length === 21) unlock('Full run-through done. You can log today.');
+    }
   }
-  document.getElementById('prev').onclick = function () { if (i > 0) { i--; show(); } };
-  document.getElementById('nextBtn').onclick = function () { i = i < moves.length - 1 ? i + 1 : 0; show(); };
-  show();
+  $('prev').onclick = function () { stopPlay(); if (i > chunk.from) { i--; show(); } };
+  $('nextBtn').onclick = function () { stopPlay(); i = i < chunk.to ? i + 1 : chunk.from; show(); };
 
-  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
-  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  // ---------- Hands-free ----------
+  var speed = 2800, timer = null, playing = false, wake = null;
+  var speedBtns = document.querySelectorAll('[data-speed]');
+  Array.prototype.forEach.call(speedBtns, function (b) {
+    b.onclick = function () {
+      speed = parseInt(b.getAttribute('data-speed'), 10);
+      Array.prototype.forEach.call(speedBtns, function (o) { o.className = 'pill' + (o === b ? ' on' : ''); });
+    };
+  });
+  function say(text) {
+    try {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = 'ja-JP'; u.rate = 0.9;
+      var v = window.speechSynthesis.getVoices().filter(function (x) { return x.lang && x.lang.indexOf('ja') === 0; })[0];
+      if (v) u.voice = v;
+      window.speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+  function keepAwake() { try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(function (w) { wake = w; }).catch(function () {}); } catch (e) {} }
+  function letSleep() { try { if (wake) { wake.release(); wake = null; } } catch (e) {} }
+  function step() {
+    show();
+    say(moves[i][1] + (kiai.indexOf(i) > -1 ? '、きあい' : ''));
+    timer = setTimeout(function () {
+      if (!playing) return;
+      if (i < chunk.to) { i++; step(); }
+      else {
+        say('やめ');
+        if (chunk === chunks[0]) unlock('Full run-through done. You can log today.');
+        stopPlay();
+      }
+    }, speed);
+  }
+  function startPlay() {
+    playing = true;
+    i = chunk.from;
+    $('playBtn').textContent = '■ Stop';
+    keepAwake();
+    $('follow').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    say('よい');
+    timer = setTimeout(step, 2000);
+  }
+  function stopPlay() {
+    playing = false;
+    clearTimeout(timer);
+    $('playBtn').textContent = '▶ Start hands-free';
+    letSleep();
+  }
+  $('playBtn').onclick = function () { playing ? stopPlay() : startPlay(); };
+
+  // ---------- Test yourself ----------
+  var techniques = ["Gedan-barai","Oi-zuki chūdan","Tettsui-uchi","Age-uke","Shutō-uke"];
+  var stances = ["Left front stance","Right front stance","Left back stance","Right back stance"];
+  var qNum = 0, correct = 0, answered = false;
+  function shuffle(a) { for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = a[k]; a[k] = a[j]; a[j] = t; } return a; }
+  function newQuestion() {
+    answered = false; qNum++;
+    $('qTag').textContent = 'Question ' + qNum;
+    $('feedback').textContent = '';
+    var n = Math.floor(Math.random() * 20);
+    var type = Math.random() < 0.7 ? 'tech' : 'stance';
+    var prev = moves[n], target = moves[n + 1];
+    var right = type === 'tech' ? target[2] : target[3];
+    var pool = (type === 'tech' ? techniques : stances).filter(function (x) { return x !== right; });
+    var options = shuffle([right].concat(shuffle(pool).slice(0, 2)));
+    $('question').textContent = type === 'tech'
+      ? 'After move ' + (n + 1) + ' (' + prev[2] + '), what comes next?'
+      : 'Move ' + (n + 2) + ' is ' + target[2] + '. Which stance?';
+    $('answers').innerHTML = '';
+    options.forEach(function (o) {
+      var b = document.createElement('button');
+      b.className = 'btn';
+      b.textContent = o;
+      b.onclick = function () {
+        if (answered) return;
+        answered = true;
+        var full = 'Move ' + (n + 2) + ' is ' + target[2] + ' in ' + target[3].toLowerCase() + '.';
+        if (o === right) {
+          b.className = 'btn right'; correct++;
+          $('feedback').textContent = 'Yes! ' + full;
+          if (correct >= 5) unlock('5 right answers. You can log today.');
+        } else {
+          b.className = 'btn wrong';
+          Array.prototype.forEach.call($('answers').children, function (x) { if (x.textContent === right) x.className = 'btn right'; });
+          $('feedback').textContent = 'Not quite. ' + full;
+        }
+        $('score').textContent = correct + ' correct';
+      };
+      $('answers').appendChild(b);
+    });
+  }
+  $('nextQ').onclick = newQuestion;
+  newQuestion();
+
+  // ---------- Log practice ----------
   function dayKey(d) { return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
-
-  var msg = document.getElementById('doneMsg');
   var today = dayKey(new Date());
-  if (load('lastPractice') === today) msg.textContent = 'Logged for today. See you tomorrow!';
-  document.getElementById('practised').onclick = function () {
+  function unlock(text) {
+    if (unlocked) return;
+    unlocked = true;
+    $('practised').disabled = false;
+    $('unlockMsg').textContent = text;
+  }
+  if (load('lastPractice') === today) {
+    $('unlockMsg').textContent = 'Already logged today. Keep going if you like.';
+    $('doneMsg').textContent = 'See you tomorrow!';
+  }
+  $('practised').onclick = function () {
     var last = load('lastPractice');
     var y = new Date(); y.setDate(y.getDate() - 1);
     var streak = parseInt(load('streak') || '0', 10);
-    if (last === today) { msg.textContent = 'Already logged today. Your streak is ' + streak + '.'; return; }
+    if (last === today) { $('doneMsg').textContent = 'Already logged today. Your streak is ' + streak + '.'; return; }
     streak = (last === dayKey(y)) ? streak + 1 : 1;
     save('streak', streak);
     save('lastPractice', today);
-    msg.textContent = 'Nice work! Your streak is now ' + streak + (streak === 1 ? ' day.' : ' days.');
+    $('doneMsg').textContent = 'Nice work! Your streak is now ' + streak + (streak === 1 ? ' day.' : ' days.');
   };
+
+  show();
 </script>
 </body>
 </html>
