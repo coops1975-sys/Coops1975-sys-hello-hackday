@@ -4,65 +4,96 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dojo Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Yuji+Boku&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#f7f5f0; --card:#ffffff; --text:#1a1a1a; --muted:#6b6b6b; --red:#c8102e; --line:#e3e0d8; }
+  :root { --bg:#f4f0e6; --card:#fffdf8; --ink:#1a1a1a; --muted:#5c5850; --red:#c8102e; --line:#e4ddcc; }
   * { box-sizing:border-box; }
-  body { margin:0; font-family:-apple-system,system-ui,sans-serif; background:var(--bg); color:var(--text); }
-  main { max-width:480px; margin:0 auto; padding:16px 16px 48px; }
-  .hero { text-align:center; padding:8px 0 16px; }
-  .hero svg { width:140px; height:140px; }
-  .hero-caption { font-size:12px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin:-4px 0 6px; }
-  h1 { font-size:32px; margin:4px 0 6px; }
-  .sub { color:var(--muted); margin:0; }
-  h2 { font-size:18px; margin:24px 0 12px; }
-  .card { background:var(--card); border-radius:14px; padding:16px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,.06); border:1px solid var(--line); }
+  body { margin:0; font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--ink); }
+  main { max-width:480px; margin:0 auto; padding:0 20px 48px; }
+  .serif { font-family:'Shippori Mincho',serif; }
+  .hero { text-align:center; padding:36px 4px 24px; }
+  .hero svg { width:280px; max-width:100%; height:auto; }
+  .kanji { font-family:'Yuji Boku',serif; font-size:64px; line-height:1; margin-top:6px; }
+  h1 { font-family:'Shippori Mincho',serif; font-size:34px; margin:6px 0 0; }
+  .sub { color:var(--muted); font-size:15px; line-height:1.5; margin:8px auto 0; max-width:300px; }
+  h2 { font-family:'Shippori Mincho',serif; font-size:22px; margin:28px 0 12px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; margin-bottom:14px; }
   .label { color:var(--muted); font-size:13px; }
-  .grade-name { font-size:22px; font-weight:700; margin-top:12px; }
-  .next { margin-top:14px; padding-top:14px; border-top:1px solid var(--line); }
-  select, input[type=date] { margin-top:8px; width:100%; padding:10px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--text); font-size:16px; }
+  select, input[type=date] { margin-top:8px; width:100%; padding:12px; border-radius:10px; border:1px solid var(--line); background:#fff; color:var(--ink); font-family:inherit; font-size:16px; }
+  .grade-name { font-family:'Shippori Mincho',serif; font-size:24px; font-weight:700; margin-top:14px; }
   .track { display:flex; align-items:flex-start; justify-content:space-between; margin-top:18px; }
-  .belt-step { text-align:center; width:64px; flex-shrink:0; }
-  .belt-step svg { width:56px; height:38px; transition:opacity .3s; }
-  .belt-step .name { font-size:11px; color:var(--muted); margin-top:2px; }
-  .belt-step.now .name { color:var(--text); font-weight:700; }
-  .link { flex:1; height:3px; background:var(--line); margin-top:18px; }
-  .link.done { background:var(--text); }
-  .stats { display:flex; gap:12px; }
-  .stats .card { flex:1; text-align:center; }
-  .num { font-size:28px; font-weight:700; }
-  .kata { display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--text); }
-  .step { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; background:var(--line); }
+  .belt-step { text-align:center; width:66px; flex-shrink:0; }
+  .belt-step svg { width:58px; height:39px; }
+  .belt-step .name { font-size:12px; color:var(--muted); margin-top:4px; }
+  .belt-step.now .name { color:var(--ink); font-weight:700; }
+  .link { flex:1; height:2px; background:var(--line); margin-top:19px; }
+  .link.done { background:var(--ink); }
+  .next { margin-top:16px; padding-top:16px; border-top:1px solid var(--line); }
+  .stats { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .stats .card { text-align:center; margin-bottom:0; }
+  .stats .dark { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .stats .dark .label { color:var(--bg); opacity:.8; }
+  .num { font-family:'Shippori Mincho',serif; font-size:36px; font-weight:700; }
+  .red { color:var(--red); }
+  .kata { display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--ink); padding:16px; }
+  .step { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; background:var(--ink); color:var(--bg); }
   .kata.current { border:2px solid var(--red); }
   .kata.current .step { background:var(--red); color:#fff; }
-  .kata.locked { opacity:.5; }
-  .kata-name { font-weight:600; }
-  .arrow { margin-left:auto; color:var(--muted); }
-  .tabs { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:12px; }
-  .tab { flex-shrink:0; padding:8px 14px; border-radius:20px; border:1px solid var(--line); background:#fff; font-size:14px; cursor:pointer; color:var(--text); }
-  .tab.active { background:var(--text); color:#fff; border-color:var(--text); }
-  .term { display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); }
+  .kata.current .label { color:#a30d25; }
+  .kata.locked { background:transparent; border:1px dashed #cfc6b2; color:#6b665c; }
+  .kata.locked .step { background:transparent; color:#6b665c; border:1px dashed #b5ab95; }
+  .kata-name { font-weight:700; }
+  .arrow { margin-left:auto; color:var(--muted); font-size:22px; }
+  .tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  .tab { min-height:44px; padding:10px 16px; border-radius:22px; border:1px solid #d8d0bc; background:var(--card); color:var(--ink); font-family:inherit; font-size:14px; cursor:pointer; }
+  .tab.active { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  #terms { padding:6px 20px; }
+  .term { display:flex; justify-content:space-between; gap:12px; padding:13px 0; border-bottom:1px solid #ece6d6; }
   .term:last-child { border-bottom:none; }
-  .jp { font-weight:700; }
-  .en { color:var(--muted); text-align:right; }
-  .note { color:var(--muted); font-size:13px; text-align:center; margin-top:32px; }
+  .jp { font-family:'Shippori Mincho',serif; font-weight:700; font-size:17px; }
+  .en { color:var(--muted); font-size:15px; text-align:right; }
+  .note { color:#6b665c; font-size:13px; text-align:center; margin-top:28px; }
 </style>
 </head>
 <body>
 <main>
   <div class="hero">
-    <svg viewBox="0 0 200 200" aria-hidden="true">
-      <circle cx="100" cy="100" r="78" fill="none" stroke="#1a1a1a" stroke-width="14" stroke-linecap="round" stroke-dasharray="430 60" transform="rotate(-60 100 100)" opacity="0.9"/>
-      <text x="100" y="118" text-anchor="middle" font-size="52" font-family="serif" fill="#1a1a1a">空手</text>
-      <rect x="146" y="146" width="28" height="28" rx="3" fill="#c8102e"/>
+    <svg viewBox="0 0 240 210" aria-hidden="true">
+      <defs>
+        <filter id="brushSun" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="3" seed="4"/><feDisplacementMap in="SourceGraphic" scale="12"/></filter>
+        <filter id="brushInk" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="2" seed="9"/><feDisplacementMap in="SourceGraphic" scale="3.5"/></filter>
+      </defs>
+      <circle cx="128" cy="96" r="74" fill="#c8102e" filter="url(#brushSun)"/>
+      <g fill="#c8102e" filter="url(#brushSun)"><circle cx="38" cy="62" r="2.5"/><circle cx="214" cy="150" r="2"/><circle cx="46" cy="150" r="1.6"/><circle cx="206" cy="36" r="1.8"/></g>
+      <path d="M30 196 C 80 188, 150 192, 214 186" fill="none" stroke="#1a1a1a" stroke-width="6" stroke-linecap="round" filter="url(#brushInk)"/>
+      <g filter="url(#brushInk)">
+        <g fill="none" stroke="#1a1a1a" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M112 118 L108 156 L106 186" stroke-width="20"/>
+          <path d="M98 189 L124 190" stroke-width="8"/>
+          <path d="M112 116 L86 76" stroke-width="32"/>
+          <path d="M116 112 L162 98" stroke-width="22"/>
+          <path d="M160 98 L204 86" stroke-width="15"/>
+          <path d="M88 78 L108 96 L124 84" stroke-width="11"/>
+          <path d="M82 80 L64 104 L80 112" stroke-width="11"/>
+        </g>
+        <path d="M200 78 L218 76 L222 90 L204 96 Z" fill="#1a1a1a"/>
+        <circle cx="70" cy="56" r="13" fill="#1a1a1a"/>
+        <circle cx="126" cy="82" r="7" fill="#1a1a1a"/>
+        <circle cx="82" cy="113" r="7" fill="#1a1a1a"/>
+        <g fill="none" stroke="#f4f0e6" stroke-width="2.5" stroke-linecap="round">
+          <path d="M98 112 L124 104"/><path d="M112 108 L106 130"/><path d="M114 108 L118 128"/>
+        </g>
+      </g>
     </svg>
-    <div class="hero-caption">Karate</div>
+    <div class="kanji">道場</div>
     <h1>Dojo Home</h1>
     <p class="sub">Learn the sequence at home. Bring your focus to form in the dojo.</p>
   </div>
 
   <h2>Your grade</h2>
   <div class="card">
-    <div class="label">I'm currently</div>
+    <label class="label" for="gradeSelect">I'm currently</label>
     <select id="gradeSelect"></select>
     <div class="grade-name" id="gradeName"></div>
     <div class="track" id="track"></div>
@@ -70,12 +101,12 @@
   </div>
 
   <div class="stats">
-    <div class="card"><div class="num" id="streak">0</div><div class="label">day streak</div></div>
-    <div class="card"><div class="num" id="days">–</div><div class="label">days to grading</div></div>
+    <div class="card dark"><div class="num" id="streak">0</div><div class="label">day streak</div></div>
+    <div class="card"><div class="num red" id="days">–</div><div class="label">days to grading</div></div>
   </div>
 
-  <div class="card">
-    <div class="label">Your next grading date</div>
+  <div class="card" style="margin-top:14px">
+    <label class="label" for="gradingDate">Your next grading date</label>
     <input type="date" id="gradingDate">
   </div>
 
@@ -111,11 +142,10 @@
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
   function beltIcon(colour, achieved) {
-    var stroke = '#555';
-    var op = achieved ? 1 : 0.25;
+    var op = achieved ? 1 : 0.28;
     var dash = achieved ? '' : ' stroke-dasharray="3 2"';
     return '<svg viewBox="0 0 60 40" style="opacity:' + op + '">' +
-      '<g fill="' + colour + '" stroke="' + stroke + '" stroke-width="1.5"' + dash + ' stroke-linejoin="round">' +
+      '<g fill="' + colour + '" stroke="#4a463f" stroke-width="1.5"' + dash + ' stroke-linejoin="round">' +
       '<rect x="2" y="9" width="56" height="8" rx="2"/>' +
       '<polygon points="27,17 19,37 25,38 31,18"/>' +
       '<polygon points="31,18 35,38 41,37 33,17"/>' +
@@ -154,7 +184,7 @@
     });
 
     document.getElementById('next').innerHTML = nxt
-      ? '<div class="label">Coming next</div><div style="margin-top:4px"><strong>' + nxt.belt + ' belt · ' + nxt.kyu + '</strong></div><div class="label" style="margin-top:4px">Kata to learn: ' + nxt.kata + '</div>'
+      ? '<div class="label">Coming next</div><div style="margin-top:4px"><strong>' + nxt.belt + ' belt · ' + nxt.kyu + '</strong></div><div class="label" style="margin-top:2px">Kata to learn: ' + nxt.kata + '</div>'
       : '<div class="label">You\'ve completed the beginner path. Talk to your sensei about what comes next.</div>';
 
     var path = document.getElementById('path');
@@ -162,12 +192,13 @@
     grades.forEach(function (gr, n) {
       if (!gr.kata) return;
       var status, cls, arrow;
-      if (n <= current) { status = 'Learned ✓'; cls = ''; arrow = '›'; }
+      if (n <= current) { status = 'Learned · revisit any time'; cls = ''; arrow = '›'; }
       else if (n === current + 1) { status = 'For your next grading'; cls = ' current'; arrow = '›'; }
       else { status = 'Unlocks later'; cls = ' locked'; arrow = '🔒'; }
       if (!gr.page && n <= current + 1) { status += ' · coming soon'; }
-      var el = document.createElement(gr.page && n <= current + 1 ? 'a' : 'div');
-      if (gr.page && n <= current + 1) el.href = gr.page;
+      var clickable = gr.page && n <= current + 1;
+      var el = document.createElement(clickable ? 'a' : 'div');
+      if (clickable) el.href = gr.page;
       el.className = 'card kata' + cls;
       el.innerHTML = '<div class="step">' + n + '</div><div><div class="kata-name">' + gr.kata + '</div><div class="label">' + status + '</div></div><div class="arrow">' + arrow + '</div>';
       path.appendChild(el);
