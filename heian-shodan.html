@@ -3,15 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<title>Heian Shodan · Dojo Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Yuji+Boku&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#f7f5f0; --card:#fff; --text:#1a1a1a; --muted:#6b6b6b; --red:#c8102e; --line:#e3e0d8; }
+  :root { --bg:#f4f0e6; --card:#fffdf8; --ink:#1a1a1a; --muted:#5c5850; --red:#c8102e; --line:#e4ddcc; }
   * { box-sizing:border-box; }
-  body { margin:0; font-family:-apple-system,system-ui,sans-serif; background:var(--bg); color:var(--text); }
-  main { max-width:480px; margin:0 auto; padding:16px 16px 48px; }
-  .back { text-decoration:none; color:var(--muted); display:inline-block; margin-bottom:12px; }
-  h1 { font-size:28px; margin:0 0 4px; }
-  h2 { font-size:18px; margin:24px 0 10px; }
-  .sub { color:var(--muted); margin:0 0 16px; }
-  .card { background:var(--card); border-radius:14px; padding:16px; margin-bottom:12px; border:1px solid var(--line); box-shadow:0 1px 3px rgba(0,0,0,.06); }
-  .video { position:relative; padding-top:56...
+  body { margin:0; font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--ink); }
+  main { max-width:480px; margin:0 auto; padding:16px 20px 48px; }
+  .back { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:10px 18px; border-radius:22px; border:1px solid var(--ink); background:var(--card); color:var(--ink); text-decoration:none; font-size:15px; font-weight:500; }
+  .head { text-align:center; padding:8px 0 4px; }
+  .kanji { font-family:'Yuji Boku',serif; font-size:52px; line-height:1; }
+  h1 { font-family:'Shippori Mincho',serif; font-size:32px; margin:8px 0 0; }
+  .sub { color:var(--muted); font-size:15px; margin:6px 0 0; }
+  h2 { font-family:'Shippori Mincho',serif; font-size:22px; margin:28px 0 12px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; margin-bottom:14px; }
+  .label { color:var(--muted); font-size:13px; }
+  .video { position:relative; padding-top:56.25%; border-radius:14px; overflow:hidden; background:var(--ink); }
+  .video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .btn { display:flex; align-items:center; justify-content:center; min-height:48px; padding:12px 18px; border-radius:24px; border:1px solid var(--ink); background:var(--card); color:var(--ink); font-family:inherit; font-size:16px; font-weight:500; text-decoration:none; cursor:pointer; width:100%; }
+  .btn.dark { background:var(--ink); color:var(--bg); }
+  .btn.red { background:var(--red); border-color:var(--red); color:#fff; }
+  .btn:disabled { opacity:.35; cursor:default; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+  .count { display:flex; justify-content:space-between; align-items:baseline; }
+  .count .jp { font-family:'Shippori Mincho',serif; font-size:20px; font-weight:700; color:var(--red); }
+  .tech { font-family:'Shippori Mincho',serif; font-size:26px; font-weight:700; margin:10px 0 2px; }
+  .stance { color:var(--muted); font-size:15px; }
+  .detail { margin-top:14px; padding-top:14px; border-top:1px solid var(--line); font-size:15px; line-height:1.5; }
+  .detail strong { display:block; font-size:13px; color:var(--muted); font-weight:500; margin-bottom:2px; }
+  .detail p { margin:0 0 10px; }
+  .opp { background:var(--bg); border-radius:12px; padding:12px 14px; }
+  .kiai { display:inline-block; margin-left:8px; padding:2px 10px; border-radius:12px; background:var(--red); color:#fff; font-size:12px; font-weight:700; vertical-align:middle; }
+  .bar { height:4px; background:var(--line); border-radius:2px; margin-top:14px; overflow:hidden; }
+  .bar div { height:100%; background:var(--red); transition:width .3s; }
+  .embusen svg { width:100%; height:auto; display:block; }
+  .move { display:flex; align-items:center; gap:12px; width:100%; min-height:48px; padding:10px 0; border:0; border-bottom:1px solid #ece6d6; background:none; font-family:inherit; font-size:15px; text-align:left; color:var(--ink); cursor:pointer; }
+  .move:last-child { border-bottom:0; }
+  .move .n { width:30px; height:30px; border-radius:50%; background:var(--bg); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .move.on .n { background:var(--red); color:#fff; }
+  .move .s { color:var(--muted); font-size:13px; }
+  .done-msg { text-align:center; color:var(--muted); font-size:14px; margin-top:10px; min-height:20px; }
+  .note { color:#6b665c; font-size:13px; text-align:center; margin-top:28px; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="index.html">‹ Dojo Home</a>
+
+  <div class="head">
+    <div class="kanji">平安初段</div>
+    <h1>Heian Shodan</h1>
+    <p class="sub">21 moves · two kiai · your first kata</p>
+  </div>
+
+  <h2>Watch it</h2>
+  <div class="card">
+    <div class="video">
+      <iframe src="https://www.youtube-nocookie.com/embed/O0ndtpxDU8s" title="Heian Shodan video" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <a class="btn" style="margin-top:12px" href="https://www.youtube.com/results?search_query=JKA+Heian+Shodan" target="_blank" rel="noopener">Video not playing? Search YouTube</a>
+  </div>
+
+  <h2>Follow along</h2>
+  <div class="card">
+    <div class="count"><span class="label" id="moveNum"></span><span class="jp" id="jpCount"></span></div>
+    <div class="tech" id="tech"></div>
+    <div class="stance" id="stance"></div>
+    <div class="bar"><div id="bar"></div></div>
+    <div class="detail">
+      <p><strong>Feet and hips</strong><span id="feet"></span></p>
+      <div class="opp"><strong>Your opponent</strong><span id="opp"></span></div>
+    </div>
+    <div class="row">
+      <button class="btn" id="prev">‹ Back</button>
+      <button class="btn dark" id="nextBtn">Next move ›</button>
+    </div>
+  </div>
+
+  <h2>Floor pattern</h2>
+  <div class="card embusen">
+    <svg viewBox="0 0 300 300" role="img" aria-label="Heian Shodan floor pattern, an I shape with diagonals at the bottom">
+      <g stroke="#1a1a1a" stroke-width="4" stroke-linecap="round" fill="none">
+        <path d="M50 50 L250 50"/>
+        <path d="M150 50 L150 230"/>
+        <path d="M50 230 L250 230"/>
+        <path d="M150 230 L90 280" stroke-dasharray="6 6"/>
+        <path d="M150 230 L210 280" stroke-dasharray="6 6"/>
+      </g>
+      <circle cx="150" cy="230" r="9" fill="#c8102e"/>
+      <g font-family="DM Sans, sans-serif" font-size="13" fill="#5c5850">
+        <text x="150" y="214" text-anchor="middle">Start</text>
+        <text x="30" y="226">1–2</text>
+        <text x="252" y="226">3–5</text>
+        <text x="158" y="140">6–9 ↑</text>
+        <text x="20" y="46">10–11</text>
+        <text x="236" y="46">12–13</text>
+        <text x="96" y="140">↓ 14–17</text>
+        <text x="40" y="290">18–19</text>
+        <text x="216" y="290">20–21</text>
+      </g>
+    </svg>
+    <p class="label" style="margin:10px 0 0">You start and finish on the same spot. If you end up somewhere else, check your turns.</p>
+  </div>
+
+  <h2>All 21 moves</h2>
+  <div class="card" id="list" style="padding:6px 20px"></div>
+
+  <button class="btn red" id="practised">✓ I practised today</button>
+  <div class="done-msg" id="doneMsg"></div>
+
+  <a class="btn" href="index.html" style="margin-top:16px">‹ Back to Dojo Home</a>
+
+  <p class="note">Based on the standard JKA version. Check the details with your sensei.</p>
+</main>
+
+<script>
+  var moves = [
+    ["Ichi","Gedan-barai","Left front stance","Turn 90° to your left. Step out with your left foot.","An attacker on your left kicks low. Sweep it away."],
+    ["Ni","Oi-zuki chūdan","Right front stance","Step forward with your right foot, hips square.","Step in and punch them in the body."],
+    ["San","Gedan-barai","Right front stance","Turn 180° clockwise, pivoting on your left foot.","A second attacker behind you kicks low."],
+    ["Shi","Tettsui-uchi","Right front stance","Draw your right foot in a little, then step it back out as you strike.","They grab your arm. Free it and hammer-fist their head."],
+    ["Go","Oi-zuki chūdan","Left front stance","Step forward with your left foot.","Follow up with a body punch."],
+    ["Roku","Gedan-barai","Left front stance","Turn 90° left to face forward, stepping with your left foot.","A new attacker in front kicks low."],
+    ["Shichi","Age-uke","Right front stance","Step forward. Open the left hand, then rise into the block.","They punch to your head. Lift it away."],
+    ["Hachi","Age-uke","Left front stance","Step forward.","They attack your head again."],
+    ["Ku","Age-uke","Right front stance","Step forward. Kiai!","Final head attack. Block with total commitment."],
+    ["Jū","Gedan-barai","Left front stance","Turn 270° anticlockwise on your right foot.","An attacker on the far left kicks low."],
+    ["Jū-ichi","Oi-zuki chūdan","Right front stance","Step forward with your right foot.","Step in and punch them."],
+    ["Jū-ni","Gedan-barai","Right front stance","Turn 180° clockwise.","An attacker behind you kicks low."],
+    ["Jū-san","Oi-zuki chūdan","Left front stance","Step forward with your left foot.","Step in and punch them."],
+    ["Jū-shi","Gedan-barai","Left front stance","Turn 90° left to face back towards the start.","An attacker ahead of you kicks low."],
+    ["Jū-go","Oi-zuki chūdan","Right front stance","Step forward.","They retreat. Drive forward with a punch."],
+    ["Jū-roku","Oi-zuki chūdan","Left front stance","Step forward.","Keep pressing them back."],
+    ["Jū-shichi","Oi-zuki chūdan","Right front stance","Step forward. Kiai!","Finish them with your strongest punch."],
+    ["Jū-hachi","Shutō-uke","Right back stance","Turn 270° anticlockwise to the left diagonal.","An attacker on the front-left diagonal punches."],
+    ["Jū-ku","Shutō-uke","Left back stance","Step 45° to the right diagonal.","Another comes from the front-right."],
+    ["Ni-jū","Shutō-uke","Left back stance","Turn 135° clockwise to the back-right diagonal.","An attacker from behind on the right."],
+    ["Ni-jū-ichi","Shutō-uke","Right back stance","Step 45° to the back-left diagonal. Then yame: return to the start.","The last attacker, from behind on the left."]
+  ];
+  var kiai = [8, 16];
+  var i = 0;
+
+  var list = document.getElementById('list');
+  moves.forEach(function (m, n) {
+    var b = document.createElement('button');
+    b.className = 'move';
+    b.innerHTML = '<span class="n">' + (n + 1) + '</span><span><div>' + m[1] + (kiai.indexOf(n) > -1 ? ' <span class="kiai">Kiai</span>' : '') + '</div><div class="s">' + m[2] + '</div></span>';
+    b.onclick = function () { i = n; show(); window.scrollTo({ top: document.getElementById('tech').offsetTop - 120, behavior: 'smooth' }); };
+    list.appendChild(b);
+  });
+
+  function show() {
+    var m = moves[i];
+    document.getElementById('moveNum').textContent = 'Move ' + (i + 1) + ' of ' + moves.length;
+    document.getElementById('jpCount').textContent = m[0];
+    document.getElementById('tech').innerHTML = m[1] + (kiai.indexOf(i) > -1 ? '<span class="kiai">Kiai</span>' : '');
+    document.getElementById('stance').textContent = m[2];
+    document.getElementById('feet').textContent = m[3];
+    document.getElementById('opp').textContent = m[4];
+    document.getElementById('bar').style.width = ((i + 1) / moves.length * 100) + '%';
+    document.getElementById('prev').disabled = i === 0;
+    document.getElementById('nextBtn').textContent = i === moves.length - 1 ? 'Start again ↺' : 'Next move ›';
+    Array.prototype.forEach.call(list.children, function (el, n) { el.className = 'move' + (n === i ? ' on' : ''); });
+  }
+  document.getElementById('prev').onclick = function () { if (i > 0) { i--; show(); } };
+  document.getElementById('nextBtn').onclick = function () { i = i < moves.length - 1 ? i + 1 : 0; show(); };
+  show();
+
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function dayKey(d) { return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+
+  var msg = document.getElementById('doneMsg');
+  var today = dayKey(new Date());
+  if (load('lastPractice') === today) msg.textContent = 'Logged for today. See you tomorrow!';
+  document.getElementById('practised').onclick = function () {
+    var last = load('lastPractice');
+    var y = new Date(); y.setDate(y.getDate() - 1);
+    var streak = parseInt(load('streak') || '0', 10);
+    if (last === today) { msg.textContent = 'Already logged today. Your streak is ' + streak + '.'; return; }
+    streak = (last === dayKey(y)) ? streak + 1 : 1;
+    save('streak', streak);
+    save('lastPractice', today);
+    msg.textContent = 'Nice work! Your streak is now ' + streak + (streak === 1 ? ' day.' : ' days.');
+  };
+</script>
+</body>
+</html>
