@@ -10,18 +10,28 @@
   body { margin:0; font-family:-apple-system,system-ui,sans-serif; background:var(--bg); color:var(--text); }
   main { max-width:480px; margin:0 auto; padding:24px 16px 48px; }
   h1 { font-size:28px; margin:0 0 4px; }
+  h2 { font-size:18px; margin:24px 0 12px; }
   .sub { color:var(--muted); margin:0 0 24px; }
   .card { background:var(--card); border-radius:14px; padding:16px; margin-bottom:12px; }
-  .stats { display:flex; gap:12px; margin-bottom:24px; }
-  .stats .card { flex:1; margin:0; text-align:center; }
-  .num { font-size:28px; font-weight:700; }
   .label { color:var(--muted); font-size:13px; }
-  input[type=date] { margin-top:8px; width:100%; padding:8px; border-radius:8px; border:1px solid var(--line); background:#000; color:var(--text); }
-  h2 { font-size:18px; margin:24px 0 12px; }
+  .belt { height:18px; border-radius:4px; margin:10px 0; border:1px solid #444; }
+  .grade-name { font-size:22px; font-weight:700; }
+  .next { margin-top:14px; padding-top:14px; border-top:1px solid var(--line); }
+  .next-belt { display:inline-block; width:40px; height:10px; border-radius:3px; vertical-align:middle; margin-right:8px; border:1px solid #444; }
+  select, input[type=date] { margin-top:8px; width:100%; padding:10px; border-radius:8px; border:1px solid var(--line); background:#000; color:var(--text); font-size:16px; }
+  .track { display:flex; align-items:center; margin:16px 0 4px; }
+  .dot { width:22px; height:22px; border-radius:50%; border:2px solid #444; flex-shrink:0; }
+  .bar { flex:1; height:4px; background:#333; }
+  .bar.done { background:var(--text); }
+  .track-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); }
+  .stats { display:flex; gap:12px; }
+  .stats .card { flex:1; text-align:center; }
+  .num { font-size:28px; font-weight:700; }
   .kata { display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--text); }
-  .step { width:36px; height:36px; border-radius:50%; background:var(--red); display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }
-  .locked { opacity:.45; }
-  .locked .step { background:var(--line); }
+  .step { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; background:var(--line); }
+  .kata.current { border:2px solid var(--red); }
+  .kata.current .step { background:var(--red); }
+  .kata.locked { opacity:.45; }
   .kata-name { font-weight:600; }
   .arrow { margin-left:auto; color:var(--muted); }
   .note { color:var(--muted); font-size:13px; text-align:center; margin-top:32px; }
@@ -31,6 +41,17 @@
 <main>
   <h1>Kata Companion</h1>
   <p class="sub">Learn the sequence at home. Bring your focus to form in the dojo.</p>
+
+  <h2>Your grade</h2>
+  <div class="card">
+    <div class="label">I'm currently</div>
+    <select id="gradeSelect"></select>
+    <div class="belt" id="belt"></div>
+    <div class="grade-name" id="gradeName"></div>
+    <div class="next" id="next"></div>
+    <div class="track" id="track"></div>
+    <div class="track-labels" id="trackLabels"></div>
+  </div>
 
   <div class="stats">
     <div class="card"><div class="num" id="streak">0</div><div class="label">day streak</div></div>
@@ -43,31 +64,80 @@
   </div>
 
   <h2>Your kata path</h2>
-
-  <a class="card kata" href="heian-shodan.html">
-    <div class="step">1</div>
-    <div><div class="kata-name">Heian Shodan</div><div class="label">21 moves · 2 kiai</div></div>
-    <div class="arrow">›</div>
-  </a>
-
-  <div class="card kata locked">
-    <div class="step">2</div>
-    <div><div class="kata-name">Heian Nidan</div><div class="label">Coming soon</div></div>
-    <div class="arrow">🔒</div>
-  </div>
-
-  <div class="card kata locked">
-    <div class="step">3</div>
-    <div><div class="kata-name">Heian Sandan</div><div class="label">Coming soon</div></div>
-    <div class="arrow">🔒</div>
-  </div>
+  <div id="path"></div>
 
   <p class="note">A companion to your training, not a replacement for your sensei.</p>
 </main>
 
 <script>
-  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
-  function save(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+  // Edit this list to match your club's belt colours and kata
+  var grades = [
+    { kyu: "Novice",  belt: "White",  colour: "#f2f2f2", kata: null },
+    { kyu: "9th kyu", belt: "Orange", colour: "#f28c28", kata: "Heian Shodan", page: "heian-shodan.html" },
+    { kyu: "8th kyu", belt: "Red",    colour: "#c8102e", kata: "Heian Nidan" },
+    { kyu: "7th kyu", belt: "Yellow", colour: "#f5d000", kata: "Heian Sandan" }
+  ];
+
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var select = document.getElementById('gradeSelect');
+  grades.forEach(function (g, n) {
+    var opt = document.createElement('option');
+    opt.value = n;
+    opt.textContent = g.kyu + " · " + g.belt + " belt";
+    select.appendChild(opt);
+  });
+  var current = parseInt(load('grade') || '0', 10);
+  select.value = current;
+  select.onchange = function () { current = parseInt(select.value, 10); save('grade', current); render(); };
+
+  function render() {
+    var g = grades[current];
+    var nxt = grades[current + 1];
+    document.getElementById('belt').style.background = g.colour;
+    document.getElementById('gradeName').textContent = g.belt + " belt · " + g.kyu;
+
+    document.getElementById('next').innerHTML = nxt
+      ? '<div class="label">Coming next</div><div style="margin-top:6px"><span class="next-belt" style="background:' + nxt.colour + '"></span><strong>' + nxt.belt + ' belt · ' + nxt.kyu + '</strong></div><div class="label" style="margin-top:6px">Kata to learn: ' + nxt.kata + '</div>'
+      : '<div class="label">You\'ve completed the beginner path. Talk to your sensei about what comes next.</div>';
+
+    var track = document.getElementById('track');
+    var labels = document.getElementById('trackLabels');
+    track.innerHTML = ''; labels.innerHTML = '';
+    grades.forEach(function (gr, n) {
+      if (n > 0) {
+        var bar = document.createElement('div');
+        bar.className = 'bar' + (n <= current ? ' done' : '');
+        track.appendChild(bar);
+      }
+      var dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.style.background = n <= current ? gr.colour : 'transparent';
+      dot.style.borderColor = gr.colour;
+      track.appendChild(dot);
+      var lab = document.createElement('span');
+      lab.textContent = gr.belt;
+      labels.appendChild(lab);
+    });
+
+    var path = document.getElementById('path');
+    path.innerHTML = '';
+    grades.forEach(function (gr, n) {
+      if (!gr.kata) return;
+      var status, cls, arrow;
+      if (n <= current) { status = 'Learned ✓'; cls = ''; arrow = '›'; }
+      else if (n === current + 1) { status = 'For your next grading'; cls = ' current'; arrow = '›'; }
+      else { status = 'Unlocks later'; cls = ' locked'; arrow = '🔒'; }
+      if (!gr.page && n <= current + 1) { status += ' · coming soon'; }
+      var el = document.createElement(gr.page && n <= current + 1 ? 'a' : 'div');
+      if (gr.page && n <= current + 1) el.href = gr.page;
+      el.className = 'card kata' + cls;
+      el.innerHTML = '<div class="step">' + n + '</div><div><div class="kata-name">' + gr.kata + '</div><div class="label">' + status + '</div></div><div class="arrow">' + arrow + '</div>';
+      path.appendChild(el);
+    });
+  }
+  render();
 
   var dateInput = document.getElementById('gradingDate');
   function showCountdown() {
