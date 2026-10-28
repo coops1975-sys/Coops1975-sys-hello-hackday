@@ -3,54 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kata Companion</title>
+<title>Dojo Home</title>
 <style>
-  :root { --bg:#111; --card:#1c1c1c; --text:#f2f2f2; --muted:#999; --red:#c8102e; --line:#333; }
+  :root { --bg:#f7f5f0; --card:#ffffff; --text:#1a1a1a; --muted:#6b6b6b; --red:#c8102e; --line:#e3e0d8; }
   * { box-sizing:border-box; }
   body { margin:0; font-family:-apple-system,system-ui,sans-serif; background:var(--bg); color:var(--text); }
-  main { max-width:480px; margin:0 auto; padding:24px 16px 48px; }
-  h1 { font-size:28px; margin:0 0 4px; }
+  main { max-width:480px; margin:0 auto; padding:16px 16px 48px; }
+  .hero { text-align:center; padding:8px 0 16px; }
+  .hero svg { width:140px; height:140px; }
+  .hero-caption { font-size:12px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin:-4px 0 6px; }
+  h1 { font-size:32px; margin:4px 0 6px; }
+  .sub { color:var(--muted); margin:0; }
   h2 { font-size:18px; margin:24px 0 12px; }
-  .sub { color:var(--muted); margin:0 0 24px; }
-  .card { background:var(--card); border-radius:14px; padding:16px; margin-bottom:12px; }
+  .card { background:var(--card); border-radius:14px; padding:16px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,.06); border:1px solid var(--line); }
   .label { color:var(--muted); font-size:13px; }
-  .belt { height:18px; border-radius:4px; margin:10px 0; border:1px solid #444; }
-  .grade-name { font-size:22px; font-weight:700; }
+  .grade-name { font-size:22px; font-weight:700; margin-top:12px; }
   .next { margin-top:14px; padding-top:14px; border-top:1px solid var(--line); }
-  .next-belt { display:inline-block; width:40px; height:10px; border-radius:3px; vertical-align:middle; margin-right:8px; border:1px solid #444; }
-  select, input[type=date] { margin-top:8px; width:100%; padding:10px; border-radius:8px; border:1px solid var(--line); background:#000; color:var(--text); font-size:16px; }
-  .track { display:flex; align-items:center; margin:16px 0 4px; }
-  .dot { width:22px; height:22px; border-radius:50%; border:2px solid #444; flex-shrink:0; }
-  .bar { flex:1; height:4px; background:#333; }
-  .bar.done { background:var(--text); }
-  .track-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); }
+  select, input[type=date] { margin-top:8px; width:100%; padding:10px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--text); font-size:16px; }
+  .track { display:flex; align-items:flex-start; justify-content:space-between; margin-top:18px; }
+  .belt-step { text-align:center; width:64px; flex-shrink:0; }
+  .belt-step svg { width:56px; height:38px; transition:opacity .3s; }
+  .belt-step .name { font-size:11px; color:var(--muted); margin-top:2px; }
+  .belt-step.now .name { color:var(--text); font-weight:700; }
+  .link { flex:1; height:3px; background:var(--line); margin-top:18px; }
+  .link.done { background:var(--text); }
   .stats { display:flex; gap:12px; }
   .stats .card { flex:1; text-align:center; }
   .num { font-size:28px; font-weight:700; }
   .kata { display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--text); }
   .step { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; background:var(--line); }
   .kata.current { border:2px solid var(--red); }
-  .kata.current .step { background:var(--red); }
-  .kata.locked { opacity:.45; }
+  .kata.current .step { background:var(--red); color:#fff; }
+  .kata.locked { opacity:.5; }
   .kata-name { font-weight:600; }
   .arrow { margin-left:auto; color:var(--muted); }
+  .tabs { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:12px; }
+  .tab { flex-shrink:0; padding:8px 14px; border-radius:20px; border:1px solid var(--line); background:#fff; font-size:14px; cursor:pointer; color:var(--text); }
+  .tab.active { background:var(--text); color:#fff; border-color:var(--text); }
+  .term { display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); }
+  .term:last-child { border-bottom:none; }
+  .jp { font-weight:700; }
+  .en { color:var(--muted); text-align:right; }
   .note { color:var(--muted); font-size:13px; text-align:center; margin-top:32px; }
 </style>
 </head>
 <body>
 <main>
-  <h1>Kata Companion</h1>
-  <p class="sub">Learn the sequence at home. Bring your focus to form in the dojo.</p>
+  <div class="hero">
+    <svg viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="78" fill="none" stroke="#1a1a1a" stroke-width="14" stroke-linecap="round" stroke-dasharray="430 60" transform="rotate(-60 100 100)" opacity="0.9"/>
+      <text x="100" y="118" text-anchor="middle" font-size="52" font-family="serif" fill="#1a1a1a">空手</text>
+      <rect x="146" y="146" width="28" height="28" rx="3" fill="#c8102e"/>
+    </svg>
+    <div class="hero-caption">Karate</div>
+    <h1>Dojo Home</h1>
+    <p class="sub">Learn the sequence at home. Bring your focus to form in the dojo.</p>
+  </div>
 
   <h2>Your grade</h2>
   <div class="card">
     <div class="label">I'm currently</div>
     <select id="gradeSelect"></select>
-    <div class="belt" id="belt"></div>
     <div class="grade-name" id="gradeName"></div>
-    <div class="next" id="next"></div>
     <div class="track" id="track"></div>
-    <div class="track-labels" id="trackLabels"></div>
+    <div class="next" id="next"></div>
   </div>
 
   <div class="stats">
@@ -66,20 +82,46 @@
   <h2>Your kata path</h2>
   <div id="path"></div>
 
+  <h2>Key terms</h2>
+  <div class="tabs" id="tabs"></div>
+  <div class="card" id="terms"></div>
+
   <p class="note">A companion to your training, not a replacement for your sensei.</p>
 </main>
 
 <script>
   // Edit this list to match your club's belt colours and kata
   var grades = [
-    { kyu: "Novice",  belt: "White",  colour: "#f2f2f2", kata: null },
+    { kyu: "Novice",  belt: "White",  colour: "#ffffff", kata: null },
     { kyu: "9th kyu", belt: "Orange", colour: "#f28c28", kata: "Heian Shodan", page: "heian-shodan.html" },
     { kyu: "8th kyu", belt: "Red",    colour: "#c8102e", kata: "Heian Nidan" },
     { kyu: "7th kyu", belt: "Yellow", colour: "#f5d000", kata: "Heian Sandan" }
   ];
 
+  var terms = {
+    "Punches": [["Oi-zuki","Stepping punch"],["Gyaku-zuki","Reverse punch"],["Kizami-zuki","Jab"],["Choku-zuki","Straight punch on the spot"],["Tettsui-uchi","Hammer fist strike"]],
+    "Blocks": [["Gedan-barai","Downward block"],["Age-uke","Rising block"],["Soto-uke","Outside block"],["Uchi-uke","Inside block"],["Shutō-uke","Knife-hand block"]],
+    "Kicks": [["Mae-geri","Front kick"],["Yoko-geri keage","Side snap kick"],["Yoko-geri kekomi","Side thrust kick"],["Mawashi-geri","Roundhouse kick"],["Ushiro-geri","Back kick"]],
+    "Stances": [["Zenkutsu-dachi","Front stance"],["Kōkutsu-dachi","Back stance"],["Kiba-dachi","Straddle (horse) stance"],["Heisoku-dachi","Feet together"],["Hachiji-dachi","Natural stance, feet apart"]],
+    "Levels": [["Jōdan","Head level"],["Chūdan","Body level"],["Gedan","Lower level"]],
+    "Counting": [["Ichi","One"],["Ni","Two"],["San","Three"],["Shi","Four"],["Go","Five"],["Roku","Six"],["Shichi","Seven"],["Hachi","Eight"],["Ku","Nine"],["Jū","Ten"]]
+  };
+
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  function beltIcon(colour, achieved) {
+    var stroke = '#555';
+    var op = achieved ? 1 : 0.25;
+    var dash = achieved ? '' : ' stroke-dasharray="3 2"';
+    return '<svg viewBox="0 0 60 40" style="opacity:' + op + '">' +
+      '<g fill="' + colour + '" stroke="' + stroke + '" stroke-width="1.5"' + dash + ' stroke-linejoin="round">' +
+      '<rect x="2" y="9" width="56" height="8" rx="2"/>' +
+      '<polygon points="27,17 19,37 25,38 31,18"/>' +
+      '<polygon points="31,18 35,38 41,37 33,17"/>' +
+      '<rect x="23" y="5" width="14" height="15" rx="3"/>' +
+      '</g></svg>';
+  }
 
   var select = document.getElementById('gradeSelect');
   grades.forEach(function (g, n) {
@@ -95,31 +137,25 @@
   function render() {
     var g = grades[current];
     var nxt = grades[current + 1];
-    document.getElementById('belt').style.background = g.colour;
     document.getElementById('gradeName').textContent = g.belt + " belt · " + g.kyu;
 
-    document.getElementById('next').innerHTML = nxt
-      ? '<div class="label">Coming next</div><div style="margin-top:6px"><span class="next-belt" style="background:' + nxt.colour + '"></span><strong>' + nxt.belt + ' belt · ' + nxt.kyu + '</strong></div><div class="label" style="margin-top:6px">Kata to learn: ' + nxt.kata + '</div>'
-      : '<div class="label">You\'ve completed the beginner path. Talk to your sensei about what comes next.</div>';
-
     var track = document.getElementById('track');
-    var labels = document.getElementById('trackLabels');
-    track.innerHTML = ''; labels.innerHTML = '';
+    track.innerHTML = '';
     grades.forEach(function (gr, n) {
       if (n > 0) {
-        var bar = document.createElement('div');
-        bar.className = 'bar' + (n <= current ? ' done' : '');
-        track.appendChild(bar);
+        var link = document.createElement('div');
+        link.className = 'link' + (n <= current ? ' done' : '');
+        track.appendChild(link);
       }
-      var dot = document.createElement('div');
-      dot.className = 'dot';
-      dot.style.background = n <= current ? gr.colour : 'transparent';
-      dot.style.borderColor = gr.colour;
-      track.appendChild(dot);
-      var lab = document.createElement('span');
-      lab.textContent = gr.belt;
-      labels.appendChild(lab);
+      var step = document.createElement('div');
+      step.className = 'belt-step' + (n === current ? ' now' : '');
+      step.innerHTML = beltIcon(gr.colour, n <= current) + '<div class="name">' + gr.belt + '</div>';
+      track.appendChild(step);
     });
+
+    document.getElementById('next').innerHTML = nxt
+      ? '<div class="label">Coming next</div><div style="margin-top:4px"><strong>' + nxt.belt + ' belt · ' + nxt.kyu + '</strong></div><div class="label" style="margin-top:4px">Kata to learn: ' + nxt.kata + '</div>'
+      : '<div class="label">You\'ve completed the beginner path. Talk to your sensei about what comes next.</div>';
 
     var path = document.getElementById('path');
     path.innerHTML = '';
@@ -138,6 +174,23 @@
     });
   }
   render();
+
+  var tabs = document.getElementById('tabs');
+  var termsBox = document.getElementById('terms');
+  function showTerms(cat) {
+    Array.prototype.forEach.call(tabs.children, function (t) { t.className = 'tab' + (t.textContent === cat ? ' active' : ''); });
+    termsBox.innerHTML = terms[cat].map(function (t) {
+      return '<div class="term"><span class="jp">' + t[0] + '</span><span class="en">' + t[1] + '</span></div>';
+    }).join('');
+  }
+  Object.keys(terms).forEach(function (cat) {
+    var b = document.createElement('button');
+    b.className = 'tab';
+    b.textContent = cat;
+    b.onclick = function () { showTerms(cat); };
+    tabs.appendChild(b);
+  });
+  showTerms("Punches");
 
   var dateInput = document.getElementById('gradingDate');
   function showCountdown() {
