@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dojo Home · About the MVP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Yuji+Boku&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f4f0e6; --card:#fffdf8; --ink:#1a1a1a; --muted:#5c5850; --red:#c8102e; --line:#e4ddcc; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; }
+  main { max-width:560px; margin:0 auto; padding:0 20px 56px; }
+  .hero { text-align:center; padding:40px 4px 8px; }
+  .hero svg { width:260px; max-width:100%; height:auto; }
+  .kanji { font-family:'Yuji Boku',serif; font-size:60px; line-height:1; margin-top:6px; }
+  h1 { font-family:'Shippori Mincho',serif; font-size:36px; margin:6px 0 0; line-height:1.15; }
+  .tagline { font-size:18px; margin:12px auto 0; max-width:420px; }
+  .tag { display:inline-block; margin-top:14px; padding:3px 12px; border-radius:12px; background:var(--card); border:1px solid var(--line); font-size:12px; font-weight:700; color:var(--muted); letter-spacing:.5px; text-transform:uppercase; }
+  h2 { font-family:'Shippori Mincho',serif; font-size:24px; margin:40px 0 12px; line-height:1.25; }
+  p { margin:0 0 12px; }
+  .muted { color:var(--muted); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; margin-bottom:14px; }
+  .btn { display:flex; align-items:center; justify-content:center; min-height:52px; padding:14px 20px; border-radius:26px; background:var(--red); color:#fff; font-size:17px; font-weight:700; text-decoration:none; margin-top:20px; }
+  .btn:hover { background:#a30d25; }
+  .btn.ghost { background:var(--card); color:var(--ink); border:1px solid var(--ink); font-weight:500; }
+  .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .contrast .card { margin:0; }
+  .contrast .dark { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .contrast strong { display:block; font-family:'Shippori Mincho',serif; font-size:18px; margin-bottom:4px; }
+  .contrast .dark .muted { color:#cfc9bb; }
+  .steps { list-style:none; padding:0; margin:0; counter-reset:s; }
+  .steps li { position:relative; padding:0 0 18px 52px; counter-increment:s; }
+  .steps li::before { content:counter(s); position:absolute; left:0; top:0; width:36px; height:36px; border-radius:50%; background:var(--ink); color:var(--bg); display:flex; align-items:center; justify-content:center; font-weight:700; }
+  .steps strong { display:block; }
+  .features { display:grid; gap:12px; }
+  .feature { display:flex; gap:14px; align-items:flex-start; }
+  .feature svg { flex-shrink:0; width:28px; height:28px; margin-top:2px; }
+  .feature strong { display:block; }
+  .who { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .who .card { margin:0; }
+  .who strong { display:block; margin-bottom:4px; }
+  .qr { display:flex; gap:18px; align-items:center; }
+  #qr { width:128px; height:128px; flex-shrink:0; background:#fff; padding:6px; border-radius:10px; border:1px solid var(--line); }
+  #qr img, #qr canvas { width:100% !important; height:auto !important; display:block; }
+  ul.plain { margin:0; padding-left:20px; }
+  ul.plain li { margin-bottom:6px; }
+  .note { color:#6b665c; font-size:13px; text-align:center; margin-top:32px; }
+  @media (max-width:380px) { .contrast, .who { grid-template-columns:1fr; } .qr { flex-direction:column; text-align:center; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="hero">
+    <svg viewBox="0 0 240 210" aria-hidden="true">
+      <defs>
+        <filter id="brushSun" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="3" seed="4"/><feDisplacementMap in="SourceGraphic" scale="12"/></filter>
+        <filter id="brushInk" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="2" seed="9"/><feDisplacementMap in="SourceGraphic" scale="3.5"/></filter>
+      </defs>
+      <circle cx="128" cy="96" r="74" fill="#c8102e" filter="url(#brushSun)"/>
+      <g fill="#c8102e" filter="url(#brushSun)"><circle cx="38" cy="62" r="2.5"/><circle cx="214" cy="150" r="2"/><circle cx="46" cy="150" r="1.6"/><circle cx="206" cy="36" r="1.8"/></g>
+      <path d="M30 196 C 80 188, 150 192, 214 186" fill="none" stroke="#1a1a1a" stroke-width="6" stroke-linecap="round" filter="url(#brushInk)"/>
+      <g filter="url(#brushInk)">
+        <g fill="none" stroke="#1a1a1a" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M112 118 L108 156 L106 186" stroke-width="20"/><path d="M98 189 L124 190" stroke-width="8"/>
+          <path d="M112 116 L86 76" stroke-width="32"/><path d="M116 112 L162 98" stroke-width="22"/>
+          <path d="M160 98 L204 86" stroke-width="15"/><path d="M88 78 L108 96 L124 84" stroke-width="11"/>
+          <path d="M82 80 L64 104 L80 112" stroke-width="11"/>
+        </g>
+        <path d="M200 78 L218 76 L222 90 L204 96 Z" fill="#1a1a1a"/>
+        <circle cx="70" cy="56" r="13" fill="#1a1a1a"/><circle cx="126" cy="82" r="7" fill="#1a1a1a"/><circle cx="82" cy="113" r="7" fill="#1a1a1a"/>
+        <g fill="none" stroke="#f4f0e6" stroke-width="2.5" stroke-linecap="round"><path d="M98 112 L124 104"/><path d="M112 108 L106 130"/><path d="M114 108 L118 128"/></g>
+      </g>
+    </svg>
+    <div class="kanji">道場</div>
+    <h1>Dojo Home</h1>
+    <p class="tagline">Your karate, between classes. Learn the kata at home so the dojo can be about form.</p>
+    <span class="tag">Hackathon MVP · working demo</span>
+    <a class="btn" href="index.html">Try the demo ›</a>
+  </div>
+
+  <h2>The problem</h2>
+  <p>Beginners spend precious class time just remembering what comes next. So kata ends up feeling like a dance: a sequence of steps.</p>
+  <div class="contrast">
+    <div class="card"><strong>A dance</strong><span class="muted">Remembering the steps. Eyes on your feet. Thinking "what's next?"</span></div>
+    <div class="card dark"><strong>A fight</strong><span class="muted">Every move meets an attacker. Intent, balance, power.</span></div>
+  </div>
+  <p style="margin-top:14px">If students know the sequence before they arrive, the sensei can spend class on technique, stance and spirit.</p>
+
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li><strong>Learn it at home</strong><span class="muted">Follow each move with its count, stance, footwork and where you are on the floor.</span></li>
+    <li><strong>Practise hands-free</strong><span class="muted">Prop up your phone. It calls out each move in Japanese while you train in the living room or garden.</span></li>
+    <li><strong>Test yourself anywhere</strong><span class="muted">Quick quiz on the bus or at lunch. Remembering is what makes it stick.</span></li>
+    <li><strong>Bring it to the dojo</strong><span class="muted">Arrive knowing the sequence, ready to work on form.</span></li>
+  </ol>
+
+  <h2>What's in the demo</h2>
+  <div class="card features">
+    <div class="feature">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="10" width="24" height="5" rx="1.5" fill="#f28c28" stroke="#4a463f" stroke-width="1.2"/><rect x="11" y="7" width="6" height="10" rx="2" fill="#f28c28" stroke="#4a463f" stroke-width="1.2"/><path d="M12 17 L9 26 M16 17 L19 26" stroke="#4a463f" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <div><strong>Your belt journey</strong><span class="muted">Set your grade, see what's next, and tap any belt to explore what it unlocks.</span></div>
+    </div>
+    <div class="feature">
+      <svg viewBox="0 0 28 28" aria-hidden="true" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"><path d="M6 6 H22 M14 6 V22 M6 22 H22"/><circle cx="14" cy="14" r="3.5" fill="#c8102e" stroke="none"/></svg>
+      <div><strong>Heian Shodan, move by move</strong><span class="muted">All 21 moves with a floor pattern that shows where you are and which way you face.</span></div>
+    </div>
+    <div class="feature">
+      <svg viewBox="0 0 28 28" aria-hidden="true" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"><circle cx="14" cy="14" r="10"/><circle cx="14" cy="14" r="4" fill="#c8102e" stroke="none"/></svg>
+      <div><strong>See the opponent</strong><span class="muted">Switch from "the steps" to "the opponent" to practise what each move is for.</span></div>
+    </div>
+    <div class="feature">
+      <svg viewBox="0 0 28 28" aria-hidden="true" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11 H9 L15 6 V22 L9 17 H5 Z"/><path d="M19 10 Q22 14 19 18"/><path d="M22 7 Q27 14 22 21"/></svg>
+      <div><strong>Hands-free mode</strong><span class="muted">Spoken counts and move names at slow, steady or brisk pace.</span></div>
+    </div>
+    <div class="feature">
+      <svg viewBox="0 0 28 28" aria-hidden="true" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="20" height="20" rx="4"/><path d="M9 14 L13 18 L20 10" stroke="#c8102e"/></svg>
+      <div><strong>Test yourself and earn your streak</strong><span class="muted">A quiz for quiet moments. Your daily streak counts only when you've really practised.</span></div>
+    </div>
+    <div class="feature">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><text x="14" y="21" text-anchor="middle" font-family="serif" font-size="18" fill="#1a1a1a">語</text></svg>
+      <div><strong>Key Japanese terms</strong><span class="muted">Punches, blocks, kicks, stances, levels and counting, with plain-English meanings.</span></div>
+    </div>
+  </div>
+
+  <h2>Try it in two minutes</h2>
+  <div class="card">
+    <ul class="plain">
+      <li>Pick your grade on the home screen, then tap the red belt to see what's next.</li>
+      <li>Open <strong>Heian Shodan</strong> and step through a few moves. Watch the dot move.</li>
+      <li>Flip the toggle to <strong>The opponent</strong>.</li>
+      <li>Turn your sound on and press <strong>Start hands-free</strong>.</li>
+      <li>Answer a few <strong>Test yourself</strong> questions.</li>
+    </ul>
+    <a class="btn" href="index.html" style="margin-top:16px">Open the demo ›</a>
+  </div>
+
+  <h2>Who it's for</h2>
+  <div class="who">
+    <div class="card"><strong>Students</strong><span class="muted">Kyu grades working towards their first three gradings. Teens and adults.</span></div>
+    <div class="card"><strong>Senseis</strong><span class="muted">Less time re-teaching the sequence. More time on form. Sensei tools are next on the roadmap.</span></div>
+  </div>
+  <p class="muted" style="margin-top:14px"><strong style="color:var(--ink)">It supports the sensei, never replaces them.</strong> The app reinforces what's taught in the dojo.</p>
+
+  <h2>Best on your phone</h2>
+  <div class="card qr">
+    <div id="qr" role="img" aria-label="QR code for this page"></div>
+    <div><p style="margin:0 0 6px"><strong>Scan to open on your phone.</strong></p><span class="muted">On iPhone, tap Share then "Add to Home Screen" to use it like an app.</span></div>
+  </div>
+
+  <h2>What's next</h2>
+  <div class="card">
+    <ul class="plain">
+      <li>Heian Nidan and Sandan, kihon and kumite</li>
+      <li>Sensei tools: set drills and focus areas, share good-practice videos</li>
+      <li>Unlock the next kata when you pass a grading</li>
+      <li>See who in your dojo practised this week</li>
+    </ul>
+  </div>
+
+  <h2>Demo notes</h2>
+  <p class="muted">This is a working prototype. The video is a placeholder, and the moves, floor positions and facing directions follow the standard JKA version but still need a sensei's review. Progress is saved only on your device.</p>
+
+  <a class="btn" href="index.html">Try the demo ›</a>
+
+  <p class="note">Dojo Home · Hackathon MVP · Original artwork, no club or association branding.</p>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  try {
+    new QRCode(document.getElementById('qr'), { text: window.location.href, width: 256, height: 256, colorDark: '#1a1a1a', colorLight: '#ffffff' });
+  } catch (e) {
+    document.getElementById('qr').parentNode.style.display = 'none';
+  }
+</script>
+</body>
+</html>
