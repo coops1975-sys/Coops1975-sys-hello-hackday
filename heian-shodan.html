@@ -126,11 +126,11 @@
 
     <div class="play">
       <strong style="font-size:15px">Hands-free</strong>
-      <div class="label" style="margin-top:2px">Prop your phone up. It counts each move aloud in Japanese and moves on by itself.</div>
+      <div class="label" style="margin-top:2px">Prop your phone up. It calls out the count and the move in Japanese, then moves on by itself.</div>
       <div class="play-row">
-        <button class="pill" data-speed="4000">Slow</button>
-        <button class="pill on" data-speed="2800">Steady</button>
-        <button class="pill" data-speed="1800">Brisk</button>
+        <button class="pill" data-speed="2500">Slow</button>
+        <button class="pill on" data-speed="1500">Steady</button>
+        <button class="pill" data-speed="700">Brisk</button>
       </div>
       <button class="btn red" id="playBtn" style="margin-top:10px">▶ Start hands-free</button>
     </div>
@@ -268,7 +268,7 @@
   $('nextBtn').onclick = function () { stopPlay(); i = i < chunk.to ? i + 1 : chunk.from; show(); };
 
   // ---------- Hands-free ----------
-  var speed = 2800, timer = null, playing = false, wake = null;
+  var speed = 1500, timer = null, playing = false, wake = null;
   var speedBtns = document.querySelectorAll('[data-speed]');
   Array.prototype.forEach.call(speedBtns, function (b) {
     b.onclick = function () {
@@ -276,31 +276,41 @@
       Array.prototype.forEach.call(speedBtns, function (o) { o.className = 'pill' + (o === b ? ' on' : ''); });
     };
   });
-  function say(text) {
+  // How each technique is spoken (Japanese spelling so the voice says it properly)
+  var spoken = { "Gedan-barai": "げだんばらい", "Oi-zuki chūdan": "おいづき、ちゅうだん", "Tettsui-uchi": "てっついうち", "Age-uke": "あげうけ", "Shutō-uke": "しゅとううけ" };
+  function say(text, done) {
+    var finished = false;
+    function finish() { if (finished) return; finished = true; if (done) done(); }
     try {
-      if (!window.speechSynthesis) return;
+      if (!window.speechSynthesis) { setTimeout(finish, 1500); return; }
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
       u.lang = 'ja-JP'; u.rate = 0.9;
       var v = window.speechSynthesis.getVoices().filter(function (x) { return x.lang && x.lang.indexOf('ja') === 0; })[0];
       if (v) u.voice = v;
+      u.onend = finish; u.onerror = finish;
       window.speechSynthesis.speak(u);
-    } catch (e) {}
+      setTimeout(finish, 6000); // safety net if the phone never reports the end
+    } catch (e) { setTimeout(finish, 1500); }
   }
   function keepAwake() { try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(function (w) { wake = w; }).catch(function () {}); } catch (e) {} }
   function letSleep() { try { if (wake) { wake.release(); wake = null; } } catch (e) {} }
   function step() {
     show();
-    say(moves[i][1] + (kiai.indexOf(i) > -1 ? '、きあい' : ''));
-    timer = setTimeout(function () {
-      if (!playing) return;
-      if (i < chunk.to) { i++; step(); }
-      else {
-        say('やめ');
-        if (chunk === chunks[0]) unlock('Full run-through done. You can log today.');
-        stopPlay();
-      }
-    }, speed);
+    var m = moves[i];
+    var words = m[1] + '、' + (spoken[m[2]] || m[2]) + (kiai.indexOf(i) > -1 ? '、きあい' : '');
+    say(words, function () {
+      // pause after the words so you have time to do the move
+      timer = setTimeout(function () {
+        if (!playing) return;
+        if (i < chunk.to) { i++; step(); }
+        else {
+          stopPlay();
+          say('やめ');
+          if (chunk === chunks[0]) unlock('Full run-through done. You can log today.');
+        }
+      }, speed);
+    });
   }
   function startPlay() {
     playing = true;
@@ -314,6 +324,7 @@
   function stopPlay() {
     playing = false;
     clearTimeout(timer);
+    try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
     $('playBtn').textContent = '▶ Start hands-free';
     letSleep();
   }
